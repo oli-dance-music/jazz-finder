@@ -8,7 +8,6 @@ import Loader from './Loader';
 export default function Yaml() {
 	const [jazzData, setJazzData] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [count, setCount] = useState(0);
 
 	useEffect(() => {
 		setLoading(true);
@@ -21,7 +20,7 @@ export default function Yaml() {
 
 				const data = await yaml.loadAll(markDownData);
 				console.log('loaded...');
-				//console.log(data);
+				console.log(data);
 				setJazzData(data);
 				setLoading(false);
 			} catch (error) {
@@ -31,19 +30,56 @@ export default function Yaml() {
 		fetchData();
 	}, []); //the loaded shouldnt change, since it is based on a static file, so we only load it once when initializing the app
 
+	if (loading) {
+		return <Loader />;
+	}
+
+	if (!jazzData.length) {
+		return <div>No Data Received...</div>;
+	}
+
+	jazzData.length && console.log(jazzData[0]);
+
+	const {
+		Artist,
+		Title,
+		Date: RecordDate,
+		Performers,
+		Label_Record,
+	} = jazzData[0].SRC;
+
 	return (
 		<>
-			{loading ? (
-				<Loader />
-			) : (
+			<div>
+				<p>Found {jazzData.length} items, Example:</p>
+				<dl className="movie__details">
+					<dt>Artist</dt>
+					<dd>{Artist}</dd>
+					<dt>Title</dt>
+					<dd>{Title}</dd>
+					<dt>Performers</dt>
+					<dd>{Performers}</dd>
+					<dt>Recorded</dt>
+					<dd>
+						{RecordDate} ({Label_Record})
+					</dd>
+				</dl>
 				<div>
-					<p>Found {jazzData.length} items, Example:</p>
+					<iframe
+						title="Example"
+						src={jazzData[0].URL.replace('details', 'embed')}
+						width={500}
+						height={50}
+						webkitallowfullscreen="true"
+						mozallowfullscreen="true"
+						allowFullScreen
+					></iframe>
+					<p>RAW data:</p>
 					<p>
-						<code>{JSON.stringify(jazzData[0])}</code>
+						<code>{JSON.stringify(jazzData[0], null, '<br/>')}</code>
 					</p>
-					<button onClick={() => setCount(count + 1)}>Count {count}</button>
 				</div>
-			)}
+			</div>
 		</>
 	);
 }
