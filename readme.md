@@ -4,12 +4,13 @@
 
 ## Short Description
 
-Jazz Finder (working title) is an app that lets you search through several databases and find relevant information about Jazz music and culture. This project is just a start. It utilized a huge dataset (+40.000 entries) of old jazz recordings, including all kinds of relevant information an links to media. The dataset consists if a dump from a former website (jazz-on-line.com, offline!). This project (https://saleach.neocities.org/jazzset/) consists not only of the dataset itelf, but also uploads of all the recordings on archive.org. The goal is to access the data through a search form and also provide access to the mp3 / other media, either through the Archive.org API or direct links. The dataset itself is available as a YAML-file and a python database. Since I have no experience with Python yet, I will access the YAML-File directly and parse it into an Array. But in future, hosting the dataset externally and accessing it via an API would be a better solution.
+Jazz Finder (working title) is an app that lets you search through several databases and find relevant information about Jazz music and culture. This project is just a start. It utilized a huge dataset (+40.000 entries) of old jazz recordings, including all kinds of relevant information an links to media. The dataset consists if a dump from a former website (jazz-on-line.com, offline!). This project (https://saleach.neocities.org/jazzset/) consists not only of the dataset itelf, but also uploads of all the recordings on archive.org. The goal is to access the data through a search form and also provide access to the mp3 / other media, either through the Archive.org API or direct links. The dataset itself is available as a YAML-file and a python database. Since I have no experience with Python yet, I will access the YAML-File directly and parse it into a JSON file to use a mock API. But in future, hosting the dataset externally and accessing it via an API would be a better solution.
 
 ## Main Milestones
 
 - Create a more detailed project plan based on the milestons below ;)
 - access the YAML-file and map it into an array, using js-yaml (https://www.npmjs.com/package/js-yaml) (done)
+- save array as a JSON file to use with nove-server (or alternative)
 - display the entries in a readable format with pagination
 - create a search mask that filters the dataset, according to different criteria
 - MAYBE: Access the Archive.org API to display mp3 media data directly in the app
