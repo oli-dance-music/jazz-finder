@@ -1,0 +1,38 @@
+{
+	"name": "react-grundlagen",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --host",
+		"build": "vite build",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"open-props": "^1.6.21",
+		"react": "^18.3.0-canary-2f8f77602-20240229",
+		"react-dom": "^18.3.0-canary-2f8f77602-20240229",
+		"react-helmet-async": "^2.0.4",
+		"react-loader-spinner": "^6.1.6",
+		"redaxios": "^0.5.1",
+		"wouter": "^3.1.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^8.57.0",
+		"@types/react": "^18.2.67",
+		"@types/react-dom": "^18.2.22",
+		"@vitejs/plugin-react": "^4.2.1",
+		"cssnano": "^6.1.1",
+		"eslint": "^8.57.0",
+		"eslint-plugin-jsx-a11y": "^6.8.0",
+		"eslint-plugin-react": "^7.34.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.6",
+		"globals": "^14.0.0",
+		"postcss-import": "^16.1.0",
+		"postcss-jit-props": "^1.0.14",
+		"postcss-preset-env": "^9.5.2",
+		"vite": "^5.2.2"
+	}
+}
