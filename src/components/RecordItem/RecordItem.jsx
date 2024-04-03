@@ -1,4 +1,3 @@
-import ReactJson from 'react-json-view';
 import classes from './RecordItem.module.css';
 import Toggle from '../primitives/Toggle/Toggle';
 
@@ -28,9 +27,7 @@ export default function RecordItem({
 							allowFullScreen
 						></iframe>
 					</div>
-					<Toggle title="Show JSON">
-						<ReactJson src={rawData} />
-					</Toggle>
+					<Toggle title="Show JSON">{JSON.stringify(rawData)}</Toggle>
 				</div>
 			</Toggle>
 		</div>
