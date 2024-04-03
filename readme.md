@@ -10,7 +10,8 @@ Jazz Finder (working title) is an app that lets you search through several datab
 
 - Create a more detailed project plan based on the milestons below ;)
 - access the YAML-file and map it into an array, using js-yaml (https://www.npmjs.com/package/js-yaml) (done)
-- save array as a JSON file to use with nove-server (or alternative)
+- save array as a JSON file for added performance (done)
+- check out express.js as a serverless api that can be used with vercel to provide a mock api for the dataset (https://expressjs.com/)
 - display the entries in a readable format with pagination
 - create a search mask that filters the dataset, according to different criteria
 - MAYBE: Access the Archive.org API to display mp3 media data directly in the app

@@ -1,0 +1,13 @@
+.recordItem {
+	padding: 5px;
+}
+
+.header {
+	background: darkblue;
+	color: white;
+}
+
+.body {
+	background-color: bisque;
+	padding: 1rem;
+}
