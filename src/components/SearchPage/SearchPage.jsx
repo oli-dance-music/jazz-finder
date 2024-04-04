@@ -17,8 +17,7 @@ export default function SearchPage() {
 
 	useEffect(() => {
 		doSearch();
-	}, [doSearch]);
-	}, [doSearch]);
+	}, []); // eslint-disable-line
 
 	return (
 		<SearchContext.Provider value={[search, searchDispatch]}>
@@ -31,16 +30,16 @@ export default function SearchPage() {
 						<>
 							<Pagination />
 							<List>
-							<List>
-								{searchResults.map((item) => (
-									<RecordItem
-										key={item.IDX}
-										url={item.URL}
-										rawData={item}
-										{...item.SRC}
-									/>
-								))}
-							</List>
+								<List>
+									{searchResults.map((item) => (
+										<RecordItem
+											key={item.IDX}
+											url={item.URL}
+											rawData={item}
+											{...item.SRC}
+										/>
+									))}
+								</List>
 							</List>
 						</>
 					) : (
