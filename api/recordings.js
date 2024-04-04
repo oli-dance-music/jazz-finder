@@ -1,4 +1,4 @@
-import allRecordings from './JazzData.json' assert { type: 'json' };
+import allRecordings from './data.json' assert { type: 'json' };
 
 export default function handler(request, response) {
 	const {
