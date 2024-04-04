@@ -8,7 +8,7 @@ import FilterForm from '../FilterForm/FilterForm';
 import Loader from '../primitives/Loader/Loader';
 import Pagination from '../Pagination/Pagination';
 import RecordItem from '../RecordItem/RecordItem';
-import RecordList from '../RecordList/RecordList';
+import List from '../primitives/List/List';
 
 export default function SearchPage() {
 	const [search, searchDispatch] = useSearchReducer();
@@ -17,7 +17,7 @@ export default function SearchPage() {
 
 	useEffect(() => {
 		doSearch();
-	}, []);
+	}, [doSearch]);
 
 	return (
 		<SearchContext.Provider value={[search, searchDispatch]}>
@@ -29,7 +29,7 @@ export default function SearchPage() {
 					{searchResults.length ? (
 						<>
 							<Pagination />
-							<RecordList>
+							<List>
 								{searchResults.map((item) => (
 									<RecordItem
 										key={item.IDX}
@@ -38,7 +38,7 @@ export default function SearchPage() {
 										{...item.SRC}
 									/>
 								))}
-							</RecordList>
+							</List>
 						</>
 					) : (
 						<div
