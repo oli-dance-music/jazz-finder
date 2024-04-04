@@ -18,6 +18,7 @@ export default function SearchPage() {
 	useEffect(() => {
 		doSearch();
 	}, [doSearch]);
+	}, [doSearch]);
 
 	return (
 		<SearchContext.Provider value={[search, searchDispatch]}>
@@ -30,6 +31,7 @@ export default function SearchPage() {
 						<>
 							<Pagination />
 							<List>
+							<List>
 								{searchResults.map((item) => (
 									<RecordItem
 										key={item.IDX}
@@ -38,6 +40,7 @@ export default function SearchPage() {
 										{...item.SRC}
 									/>
 								))}
+							</List>
 							</List>
 						</>
 					) : (
