@@ -128,7 +128,7 @@ function useSearch(
 			try {
 				//axios
 				const { data } = await axios.get(
-					'http://localhost:3000/api/recordings',
+					`${window.location.href}api/recordings`, //accessing mock api that is hosted serverless on the same url
 					{
 						params: {
 							searchTerm: debouncedSearch.searchTerm,
