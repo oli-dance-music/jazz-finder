@@ -6,9 +6,9 @@ export default function JazzFinder() {
 			<h1 style={{ textAlign: 'center' }}>Jazz Finder</h1>
 			<SearchPage />
 			<div
-				style={{ textAlign: 'center', fontSize: '3rem', fontWeight: 'bold' }}
+				style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold' }}
 			>
-				...more features coming soon...
+				&copy; {new Date().getFullYear()} Oliver Fuhrmann
 			</div>
 		</>
 	);

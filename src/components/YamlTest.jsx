@@ -2,7 +2,7 @@ const jsonUrl = '../../node-server/JazzData.json';
 
 import axios from 'redaxios';
 import { useEffect, useState } from 'react';
-import Loader from './Loader';
+import Loader from './primitives/Loader/Loader';
 import ReactJson from 'react-json-view';
 
 export default function YamlTest() {

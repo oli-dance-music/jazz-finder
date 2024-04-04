@@ -8,15 +8,13 @@ Jazz Finder (working title) is an app that lets you search through several datab
 
 ## Main Milestones
 
-- Create a more detailed project plan based on the milestons below ;)
-- access the YAML-file and map it into an array, using js-yaml (https://www.npmjs.com/package/js-yaml) (done)
-- save array as a JSON file for added performance (done)
-- check out express.js as a serverless api that can be used with vercel to provide a mock api for the dataset (https://expressjs.com/)
-- display the entries in a readable format with pagination
-- create a search mask that filters the dataset, according to different criteria
-- MAYBE: Access the Archive.org API to display mp3 media data directly in the app
-- MAYBE: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
-- MAYBE: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries
+- Create a pinboard where you can move songs from the search to save them
+- make it possible to play all songs in the pinboard via a playlist (see MAYBE1)
+- basic CSS layout with mobile responsiveness
+- extend search functionality to more parameters: eg. Label, comma separated artists...
+- MAYBE1: Access the Archive.org API to display mp3 media data directly in the app
+- MAYBE2: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
+- MAYBE3: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries
 
 ## Longer Story and Further Ideas
 

@@ -5,7 +5,7 @@ import {
 	useSearchReducer,
 } from '../../reducer/search';
 import FilterForm from '../FilterForm/FilterForm';
-import Loader from '../Loader';
+import Loader from '../primitives/Loader/Loader';
 import Pagination from '../Pagination/Pagination';
 import RecordItem from '../RecordItem/RecordItem';
 import RecordList from '../RecordList/RecordList';
@@ -41,7 +41,15 @@ export default function SearchPage() {
 							</RecordList>
 						</>
 					) : (
-						<div>No Results found, please check your search</div>
+						<div
+							style={{
+								textAlign: 'center',
+								fontSize: '2rem',
+								fontWeight: 'bold',
+							}}
+						>
+							No Results found, please check your search
+						</div>
 					)}
 				</>
 			)}
