@@ -46,6 +46,7 @@ export function useDoSearch(
 
 		const fetchData = async () => {
 			try {
+				//accessing mock api that is hosted serverless on the same url
 				const apiUrl = `${new URL(window.location.href).origin}/api/recordings`;
 				const params = {
 					searchTerm,
@@ -53,16 +54,10 @@ export function useDoSearch(
 					yearEnd,
 					pageSize,
 					currentPage,
-				}; //axios
-				const { data } = await axios.get(
-					apiUrl, //accessing mock api that is hosted serverless on the same url
-					{
-						params,
-					}
-				);
-				console.log('loaded!');
-				console.log(data);
-				//setSearchResults(data.results);
+				};
+				const { data } = await axios.get(apiUrl, {
+					params,
+				});
 				searchDispatch({
 					action: 'set',
 					parameter: 'searchResults',
@@ -77,8 +72,7 @@ export function useDoSearch(
 					action: 'set',
 					parameter: 'totalPages',
 					payload: data.total_pages,
-				}); //setTotalResults(data.total_results);
-				//setCurrentPage(data.current_page);
+				});
 				setLoading(false);
 			} catch (error) {
 				console.log(`Error: ${error}`);

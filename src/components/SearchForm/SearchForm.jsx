@@ -1,14 +1,14 @@
 import { useDoSearch, useSearchContext } from '../../reducer/search';
-import classes from './FilterForm.module.css';
+import classes from './SearchForm.module.css';
 
-export default function FilterForm({ searchTerm, yearStart, yearEnd }) {
+export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
 	const [search, searchDispatch] = useSearchContext();
 
 	const doSearch = useDoSearch(search, searchDispatch);
 
 	return (
 		<form
-			className={classes.filterForm}
+			className={classes.searchForm}
 			onSubmit={(e) => {
 				doSearch();
 				e.preventDefault();
@@ -63,7 +63,7 @@ export default function FilterForm({ searchTerm, yearStart, yearEnd }) {
 				<button type="submit">Search</button>
 				<button
 					className={classes.resetButton}
-					onClick={(e) =>
+					onClick={() =>
 						searchDispatch({
 							action: 'reset',
 						})

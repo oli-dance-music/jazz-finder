@@ -11,6 +11,7 @@ Jazz Finder (working title) is an app that lets you search through several datab
 - Create a pinboard where you can move songs from the search to save them
 - make it possible to play all songs in the pinboard via a playlist (see MAYBE1)
 - basic CSS layout with mobile responsiveness
+- RecordingItem: Make use of the mapping of Artists, dates etc for a nicer view...
 - extend search functionality to more parameters: eg. Label, comma separated artists...
 - MAYBE1: Access the Archive.org API to display mp3 media data directly in the app
 - MAYBE2: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
