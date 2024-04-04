@@ -9,19 +9,25 @@ export default function handler(request, response) {
 
 	const {
 		searchTerm = '',
-		year = '',
+		yearStart = '',
+		yearEnd = '',
 		currentPage = 1,
 		pageSize = 20,
 	} = request.query;
 
 	// Array mit Einträgen bzw. leerer Array, falls searchTerm leer ist
-	const filteredRecordings = getRecordings(searchTerm, year);
+	const filteredRecordings = getRecordings(searchTerm, yearStart, yearEnd);
 
 	return response.json(
-		buildResponse(filteredRecordings, currentPage, pageSize)
+		buildResponse(
+			filteredRecordings,
+			currentPage,
+			parseInt(pageSize),
+			request.query
+		)
 	);
 
-	function getRecordings(searchTerm = '', year = '') {
+	function getRecordings(searchTerm = '', yearStart = '', yearEnd = '') {
 		const regExp = new RegExp(searchTerm, 'i');
 
 		let filteredRecordings = allRecordings;
@@ -34,15 +40,26 @@ export default function handler(request, response) {
 					regExp.test(SRC.Performers)
 			);
 		}
-		if (year.length) {
-			filteredRecordings = filteredRecordings.filter(
-				({ Year }) => Year == year
-			);
+		if (yearStart.length || yearEnd.length) {
+			filteredRecordings = filteredRecordings.filter(({ Year }) => {
+				if (yearStart.length && yearEnd.length) {
+					return Year >= yearStart && Year <= yearEnd;
+				} else if (yearStart.length) {
+					return Year == yearStart;
+				} else if (yearEnd.length) {
+					return Year == yearEnd;
+				}
+			});
 		}
 		return filteredRecordings;
 	}
 
-	function buildResponse(recordings, currentPage = 1, pageSize = 10) {
+	function buildResponse(
+		recordings,
+		currentPage = 1,
+		pageSize = 10,
+		query = ''
+	) {
 		const lastPage = Math.ceil(recordings.length / pageSize);
 		//if the current page is too high, set it to the last existing page, if it is too low set it to 1
 		currentPage = Math.max(1, Math.min(currentPage, lastPage));
@@ -55,6 +72,7 @@ export default function handler(request, response) {
 			page_size: pageSize,
 			total_results: recordings.length,
 			total_pages: lastPage,
+			query,
 		};
 	}
 }

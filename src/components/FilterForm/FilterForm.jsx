@@ -1,13 +1,16 @@
+import { useDoSearch, useSearchContext } from '../../reducer/search';
 import classes from './FilterForm.module.css';
-import { useSearchContext } from '../JazzFinder';
 
-export default function FilterForm({ searchTerm, year }) {
-	const searchDispatch = useSearchContext();
+export default function FilterForm({ searchTerm, yearStart, yearEnd }) {
+	const [search, searchDispatch] = useSearchContext();
+
+	const doSearch = useDoSearch(search, searchDispatch);
 
 	return (
 		<form
 			className={classes.filterForm}
 			onSubmit={(e) => {
+				doSearch();
 				e.preventDefault();
 			}}
 		>
@@ -19,25 +22,55 @@ export default function FilterForm({ searchTerm, year }) {
 					value={searchTerm}
 					onChange={(e) =>
 						searchDispatch({
-							action: 'setSearchTerm',
+							action: 'set',
+							parameter: 'searchTerm',
 							payload: e.target.value,
 						})
 					}
 				/>
 			</div>
 			<div className={classes.formElement}>
-				<label htmlFor="year">Year</label>
+				<label htmlFor="yearStart">Year</label>
 				<input
-					id="year"
+					id="yearStart"
 					type="number"
-					value={year}
+					size={4}
+					value={yearStart}
 					onChange={(e) =>
 						searchDispatch({
-							action: 'setYear',
+							action: 'set',
+							parameter: 'yearStart',
+							payload: e.target.value,
+						})
+					}
+				/>{' '}
+				<label htmlFor="yearEnd">to</label>
+				<input
+					id="yearEnd"
+					type="number"
+					value={yearEnd}
+					size={4}
+					onChange={(e) =>
+						searchDispatch({
+							action: 'set',
+							parameter: 'yearEnd',
 							payload: e.target.value,
 						})
 					}
 				/>
+			</div>
+			<div className={classes.formElement}>
+				<button type="submit">Search</button>
+				<button
+					className={classes.resetButton}
+					onClick={(e) =>
+						searchDispatch({
+							action: 'reset',
+						})
+					}
+				>
+					Reset
+				</button>
 			</div>
 		</form>
 	);
