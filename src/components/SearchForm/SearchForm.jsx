@@ -1,62 +1,49 @@
-import { doSearch, useSearchContext } from '../../reducer/search';
+import { useRef } from 'react';
+import { useSearchContext } from '../../reducer/search';
 import classes from './SearchForm.module.css';
 
 export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
-	const [search, searchDispatch] = useSearchContext();
+	const [, searchDispatch] = useSearchContext();
+
+	//we need to use uncontrolled inputs because we only want to change the state once the form is submitted
+	const searchTermRef = useRef(searchTerm);
+	const yearStartRef = useRef(yearStart);
+	const yearEndRef = useRef(yearEnd);
 
 	return (
 		<form
 			className={classes.searchForm}
 			onSubmit={(e) => {
-				doSearch(search, searchDispatch);
+				searchDispatch({
+					action: 'set',
+					parameter: 'searchTerm',
+					payload: searchTermRef.current.value,
+				});
+				searchDispatch({
+					action: 'set',
+					parameter: 'yearStart',
+					payload: yearStartRef.current.value,
+				});
+				searchDispatch({
+					action: 'set',
+					parameter: 'yearEnd',
+					payload: yearEndRef.current.value,
+				});
 				e.preventDefault();
 			}}
 		>
 			<div className={classes.formElement}>
 				<label htmlFor="searchTerm">Artist, Song, Performers</label>
-				<input
-					id="searchTerm"
-					type="search"
-					value={searchTerm}
-					onChange={(e) =>
-						searchDispatch({
-							action: 'set',
-							parameter: 'searchTerm',
-							payload: e.target.value,
-						})
-					}
-				/>
+				<input id="searchTerm" ref={searchTermRef} />
 			</div>
-			<div className={classes.formElement}>
-				<label htmlFor="yearStart">Year</label>
-				<input
-					id="yearStart"
-					type="number"
-					size={4}
-					value={yearStart}
-					onChange={(e) =>
-						searchDispatch({
-							action: 'set',
-							parameter: 'yearStart',
-							payload: e.target.value,
-						})
-					}
-				/>{' '}
-				<label htmlFor="yearEnd">to</label>
-				<input
-					id="yearEnd"
-					type="number"
-					value={yearEnd}
-					size={4}
-					onChange={(e) =>
-						searchDispatch({
-							action: 'set',
-							parameter: 'yearEnd',
-							payload: e.target.value,
-						})
-					}
-				/>
-			</div>
+			{
+				<div className={classes.formElement}>
+					<label htmlFor="yearStart">Year</label>
+					<input id="yearStart" ref={yearStartRef} type="number" size={4} />
+					<label htmlFor="yearEnd">to</label>
+					<input id="yearEnd" ref={yearEndRef} type="number" size={4} />
+				</div>
+			}
 			<div className={classes.formElement}>
 				<button type="submit">Search</button>
 				<button

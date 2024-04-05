@@ -16,26 +16,7 @@ export default function RecordItem({
 	const [, mediaDispatch] = useMediaContext();
 	const [mp3Url, setMp3Url] = useState(null);
 
-	useEffect(() => {
-		//prepare url for playing
-		const apiUrl = url.replace('details', 'metadata');
-		const mp3Path = url.replace('details', 'download');
-
-		const fetchData = async () => {
-			try {
-				axios.get(apiUrl).then((res) => {
-					const mp3Url =
-						mp3Path +
-						'/' +
-						res.data.files.find(({ format }) => format === 'VBR MP3').name;
-					setMp3Url(mp3Url);
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchData();
-	}, [url]);
+	useSetMp3Url(url, setMp3Url);
 
 	return (
 		<div className={classes.recordItem}>
@@ -76,4 +57,27 @@ export default function RecordItem({
 			</Toggle>
 		</div>
 	);
+}
+
+function useSetMp3Url(url, setMp3Url) {
+	useEffect(() => {
+		//prepare url for playing
+		const apiUrl = url.replace('details', 'metadata');
+		const mp3Path = url.replace('details', 'download');
+
+		const fetchData = async () => {
+			try {
+				axios.get(apiUrl).then((res) => {
+					const mp3Url =
+						mp3Path +
+						'/' +
+						res.data.files.find(({ format }) => format === 'VBR MP3').name;
+					setMp3Url(mp3Url);
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchData();
+	}, [url]);
 }

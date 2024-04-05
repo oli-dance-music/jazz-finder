@@ -9,7 +9,7 @@ export function useMediaContext() {
 export function mediaReducer(media, message) {
 	switch (message.action) {
 		case 'play':
-			console.log(message.payload);
+			//console.log(message.payload);
 			return { ...media, playing: message.payload };
 	}
 }

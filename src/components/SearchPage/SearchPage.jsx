@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import {
 	SearchContext,
-	doSearch,
 	useSearchReducer,
+	useSearchHook,
 } from '../../reducer/search';
 import Loader from '../primitives/Loader/Loader';
 import Pagination from '../Pagination/Pagination';
@@ -13,25 +13,33 @@ import SearchForm from '../SearchForm/SearchForm';
 import classes from './SearchPage.module.css';
 
 export default function SearchPage() {
+	//we init the searchReducer and spread the search object into variables
 	const [search, searchDispatch] = useSearchReducer();
-	const { searchResults } = search;
+	const { pageSize } = search;
 
-	//do search once in the beginning without parameters to load all recordings (paginated)
-	useEffect(() => {
-		doSearch(search, searchDispatch);
-	}, []); // eslint-disable-line
+	//we use a state that mirrors the response object from the API
+	const [
+		{ results: searchResults, total_results: totalResults },
+		setSearchResults,
+	] = useState({ results: [], total_results: 0 });
+
+	//state of the site loading
+	const [loading, setLoading] = useState(false);
+
+	//this implements an effect that updates search result when a search parameter changes
+	useSearchHook({ search, setSearchResults, setLoading });
 
 	return (
 		<SearchContext.Provider value={[search, searchDispatch]}>
 			<div className={classes.searchPage}>
 				<SearchForm {...search} />
-				{search.loading ? (
+				{loading ? (
 					<Loader />
 				) : (
 					<>
 						{searchResults.length ? (
 							<>
-								<Pagination />
+								<Pagination totalResults={totalResults} pageSize={pageSize} />
 								<List>
 									<List>
 										{searchResults.map((item) => (

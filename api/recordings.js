@@ -32,6 +32,8 @@ export default function handler(request, response) {
 
 		let filteredRecordings = allRecordings;
 
+		console.log(searchTerm);
+
 		if (searchTerm.length) {
 			filteredRecordings = filteredRecordings.filter(
 				({ Title, Artist, SRC }) =>

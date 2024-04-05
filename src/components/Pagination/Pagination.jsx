@@ -1,8 +1,11 @@
-import { doSearch, useSearchContext } from '../../reducer/search';
+import { useSearchContext } from '../../reducer/search';
 import classes from './Pagination.module.css';
-export default function Pagination() {
+export default function Pagination({ totalResults, pageSize }) {
 	const [search, searchDispatch] = useSearchContext();
-	const { currentPage, totalPages, pageSize, totalResults } = search;
+	const { currentPage } = search;
+
+	//calculate total number of pages
+	const totalPages = Math.ceil(parseInt(totalResults) / parseInt(pageSize));
 
 	function setCurrentPage(value) {
 		searchDispatch({
@@ -10,7 +13,6 @@ export default function Pagination() {
 			parameter: 'currentPage',
 			payload: value,
 		});
-		doSearch(search, searchDispatch);
 	}
 
 	return (
