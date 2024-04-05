@@ -6,6 +6,7 @@ import { useMediaContext } from '../../reducer/media';
 export default function MediaPlayer() {
 	const [media] = useMediaContext();
 
+	console.log('media');
 	console.log(media);
 
 	return (
