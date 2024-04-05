@@ -57,7 +57,7 @@ export default function RecordItem({
 		<div className={classes.recordItem}>
 			<Toggle title={`${Artist} - ${Title} (${Date})`}>
 				<div className={classes.body}>
-					<button
+					{/* 					<button
 						onClick={() =>
 							mediaDispatch({
 								action: 'play',
@@ -65,8 +65,8 @@ export default function RecordItem({
 							})
 						}
 					>
-						Play Song in Player
-					</button>
+						Play Song in Player, please
+					</button> */}
 					<p>
 						<a href={url} target="_blank" rel="noreferrer">
 							Open on Archive.org
