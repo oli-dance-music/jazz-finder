@@ -1,7 +1,7 @@
 import classes from './RecordItem.module.css';
 import Toggle from '../primitives/Toggle/Toggle';
 import { useMediaContext } from '../../reducer/media';
-import axios from 'redaxios';
+//import axios from 'redaxios';
 
 export default function RecordItem({
 	Artist,
@@ -24,7 +24,8 @@ export default function RecordItem({
 
 	fetch(xml, {
 		method: 'GET',
-		//mode: 'no-cors',
+		//git add .
+		mode: 'no-cors',
 		headers: {
 			'Content-Type': 'text/xml',
 		},
