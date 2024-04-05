@@ -24,8 +24,7 @@ export default function RecordItem({
 
 	fetch(xml, {
 		method: 'GET',
-		//git add .
-		mode: 'no-cors',
+		//mode: 'no-cors',
 		headers: {
 			'Content-Type': 'text/xml',
 		},
