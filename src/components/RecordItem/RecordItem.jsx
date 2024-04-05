@@ -1,7 +1,8 @@
 import classes from './RecordItem.module.css';
 import Toggle from '../primitives/Toggle/Toggle';
 import { useMediaContext } from '../../reducer/media';
-//import axios from 'redaxios';
+import axios from 'redaxios';
+import { useEffect, useState } from 'react';
 
 export default function RecordItem({
 	Artist,
@@ -13,60 +14,45 @@ export default function RecordItem({
 	rawData,
 }) {
 	const [, mediaDispatch] = useMediaContext();
+	const [mp3Url, setMp3Url] = useState(null);
 
-	//prepare url for playing
-	const xml =
-		url.replace('details', 'download') +
-		'/' +
-		url.split('/').pop() +
-		'_files.xml';
-	console.log(xml);
+	useEffect(() => {
+		//prepare url for playing
+		const apiUrl = url.replace('details', 'metadata');
+		const mp3Path = url.replace('details', 'download');
 
-	fetch(xml, {
-		method: 'GET',
-		//mode: 'no-cors',
-		headers: {
-			'Content-Type': 'text/xml',
-		},
-	})
-		.then((response) => {
-			console.log(response);
-			response.text();
-		})
-		.then((data) => {
-			/* const parser = new DOMParser();
-			const xml = parser.parseFromString(data, 'application/xml'); */
-			console.log(data);
-		})
-		.catch(console.error);
-
-	/* 	axios
-		.get(xml, {
-			withCredentials: true,
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Headers': '*',
-				'Access-Control-Allow-Credentials': 'true',
-			},
-		})
-		.then((response) => {
-			console.log(response);
-		}); */
+		const fetchData = async () => {
+			try {
+				axios.get(apiUrl).then((res) => {
+					const mp3Url =
+						mp3Path +
+						'/' +
+						res.data.files.find(({ format }) => format === 'VBR MP3').name;
+					setMp3Url(mp3Url);
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchData();
+	}, [url]);
 
 	return (
 		<div className={classes.recordItem}>
 			<Toggle title={`${Artist} - ${Title} (${Date})`}>
 				<div className={classes.body}>
-					{/* 					<button
-						onClick={() =>
-							mediaDispatch({
-								action: 'play',
-								payload: mp3,
-							})
-						}
-					>
-						Play Song in Player, please
-					</button> */}
+					{mp3Url && (
+						<button
+							onClick={() =>
+								mediaDispatch({
+									action: 'play',
+									payload: mp3Url,
+								})
+							}
+						>
+							Play Song in Player, please
+						</button>
+					)}
 					<p>
 						<a href={url} target="_blank" rel="noreferrer">
 							Open on Archive.org
