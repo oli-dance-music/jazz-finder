@@ -1,10 +1,8 @@
-import { useDoSearch, useSearchContext } from '../../reducer/search';
+import { doSearch, useSearchContext } from '../../reducer/search';
 import classes from './Pagination.module.css';
 export default function Pagination() {
 	const [search, searchDispatch] = useSearchContext();
 	const { currentPage, totalPages, pageSize, totalResults } = search;
-
-	const doSearch = useDoSearch(search, searchDispatch);
 
 	function setCurrentPage(value) {
 		searchDispatch({
@@ -12,7 +10,7 @@ export default function Pagination() {
 			parameter: 'currentPage',
 			payload: value,
 		});
-		doSearch();
+		doSearch(search, searchDispatch);
 	}
 
 	return (

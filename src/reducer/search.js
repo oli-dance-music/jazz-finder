@@ -34,51 +34,49 @@ export function getInitialSearch() {
 	};
 }
 
-export function useDoSearch(
+export function doSearch(
 	{ searchTerm, yearStart, yearEnd, currentPage, pageSize },
 	searchDispatch
 ) {
 	function setLoading(value) {
 		searchDispatch({ action: 'set', parameter: 'loading', payload: value });
 	}
-	return () => {
-		setLoading(true);
+	setLoading(true);
 
-		const fetchData = async () => {
-			try {
-				//accessing mock api that is hosted serverless on the same url
-				const apiUrl = `${new URL(window.location.href).origin}/api/recordings`;
-				const params = {
-					searchTerm,
-					yearStart,
-					yearEnd,
-					pageSize,
-					currentPage,
-				};
-				const { data } = await axios.get(apiUrl, {
-					params,
-				});
-				searchDispatch({
-					action: 'set',
-					parameter: 'searchResults',
-					payload: data.results,
-				});
-				searchDispatch({
-					action: 'set',
-					parameter: 'totalResults',
-					payload: data.total_results,
-				});
-				searchDispatch({
-					action: 'set',
-					parameter: 'totalPages',
-					payload: data.total_pages,
-				});
-				setLoading(false);
-			} catch (error) {
-				console.log(`Error: ${error}`);
-				setLoading(false);
-			}
-		};
-		fetchData();
+	const fetchData = async () => {
+		try {
+			//accessing mock api that is hosted serverless on the same url
+			const apiUrl = `${new URL(window.location.href).origin}/api/recordings`;
+			const params = {
+				searchTerm,
+				yearStart,
+				yearEnd,
+				pageSize,
+				currentPage,
+			};
+			const { data } = await axios.get(apiUrl, {
+				params,
+			});
+			searchDispatch({
+				action: 'set',
+				parameter: 'searchResults',
+				payload: data.results,
+			});
+			searchDispatch({
+				action: 'set',
+				parameter: 'totalResults',
+				payload: data.total_results,
+			});
+			searchDispatch({
+				action: 'set',
+				parameter: 'totalPages',
+				payload: data.total_pages,
+			});
+			setLoading(false);
+		} catch (error) {
+			console.log(`Error: ${error}`);
+			setLoading(false);
+		}
 	};
+	fetchData();
 }

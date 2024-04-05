@@ -1,16 +1,14 @@
-import { useDoSearch, useSearchContext } from '../../reducer/search';
+import { doSearch, useSearchContext } from '../../reducer/search';
 import classes from './SearchForm.module.css';
 
 export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
 	const [search, searchDispatch] = useSearchContext();
 
-	const doSearch = useDoSearch(search, searchDispatch);
-
 	return (
 		<form
 			className={classes.searchForm}
 			onSubmit={(e) => {
-				doSearch();
+				doSearch(search, searchDispatch);
 				e.preventDefault();
 			}}
 		>
