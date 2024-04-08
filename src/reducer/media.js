@@ -8,13 +8,12 @@ export function useMediaContext() {
 
 export function mediaReducer(media, message) {
 	//check if song is already in playlist
+	console.log(message);
 	const AddToPlaylist = !media.playlist.some(
 		({ id }) => id === message.payload.id
 	);
 	switch (message.action) {
 		case 'play':
-			console.log(message.payload);
-
 			return {
 				...media,
 				playing: message.payload,
@@ -50,8 +49,22 @@ src: string,
 */
 
 export function getInitialMedia() {
+	let playlist = null;
+
+	console.log('initial playlist');
+
+	try {
+		playlist = JSON.parse(localStorage.getItem('playlist'));
+		playlist = Array.isArray(playlist) ? playlist : [];
+	} catch {
+		console.log('Fehlerhafte Daten. Resetting playlist');
+		playlist = [];
+	}
+
+	console.log(playlist);
+
 	return {
 		playing: null,
-		playlist: [],
+		playlist,
 	};
 }

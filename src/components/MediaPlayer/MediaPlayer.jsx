@@ -4,13 +4,15 @@ import 'react-h5-audio-player/lib/styles.css';
 import { useMediaContext } from '../../reducer/media';
 import List from '../primitives/List/List';
 import RecordItem from '../RecordItem/RecordItem';
-import { createRef, useEffect, useState } from 'react';
+import { /* createRef, */ useEffect, useState } from 'react';
 
 export default function MediaPlayer() {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
 	const [currentTrack, setTrackIndex] = useState(null);
 	//const [player, setPlayer] = useState(null);
 	const { Artist: artist = '', Title: title = '', src = '' } = playing || {};
+
+	useLocalStorage(playlist);
 
 	//const [loop, setLoop] = useState(false);
 	//console.log(playlist);
@@ -45,7 +47,7 @@ export default function MediaPlayer() {
 		console.log('current track changed');
 
 		//skip the effect if no song is loaded
-		if (!playlist.length) return;
+		if (!playlist.length || currentTrack === null) return;
 
 		//console.log(player);
 		//player.togglePlay();
@@ -85,4 +87,12 @@ export default function MediaPlayer() {
 			</List>
 		</div>
 	);
+}
+
+function useLocalStorage(playlist) {
+	useEffect(() => {
+		console.log('playlist changed');
+		console.log(playlist);
+		localStorage.setItem('playlist', JSON.stringify(playlist));
+	}, [playlist]);
 }
