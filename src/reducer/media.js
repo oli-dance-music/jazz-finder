@@ -18,8 +18,17 @@ export function useMediaReducer() {
 	return useReducer(mediaReducer, null, getInitialMedia);
 }
 
+/* 
+TYPE recordItem {
+..recordItem,
+src: string,
+}
+
+*/
+
 export function getInitialMedia() {
 	return {
-		playing: '',
+		playing: null,
+		playlist: [],
 	};
 }

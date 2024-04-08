@@ -1,4 +1,4 @@
-//import classes from './MediaPlayer.module.css';
+import classes from './MediaPlayer.module.css';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { useMediaContext } from '../../reducer/media';
@@ -6,15 +6,29 @@ import { useMediaContext } from '../../reducer/media';
 export default function MediaPlayer() {
 	const [media] = useMediaContext();
 
-	console.log('media');
-	console.log(media);
+	const {
+		Artist: artist = '',
+		Title: title = '',
+		src = null,
+	} = media.playing || {};
 
 	return (
-		<AudioPlayer
-			autoPlay
-			src={media.playing}
-			onPlay={() => console.log('onPlay')}
-			// other props here
-		/>
+		<div className={classes.mediaPlayeWrapper}>
+			<div>
+				{media.playing ? (
+					<>
+						Playing: {artist} - {title}
+					</>
+				) : (
+					<> No song is playing </>
+				)}
+			</div>
+			<AudioPlayer
+				autoPlay
+				src={src}
+				onPlay={() => console.log('onPlay')}
+				// other props here
+			/>
+		</div>
 	);
 }

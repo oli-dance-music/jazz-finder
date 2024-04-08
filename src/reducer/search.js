@@ -13,18 +13,16 @@ function searchReducer(search, message) {
 		case 'set':
 			return { ...search, [message.parameter]: message.payload };
 		case 'reset':
-			return getInitialSearch();
+			return getSearchDefaults();
 	}
 }
-
-//this handles the searchResult
-//const [searchResults, setSearchResults] = useState([]);
 
 export function useSearchReducer() {
 	return useReducer(searchReducer, null, getInitialSearch);
 }
 
-export function getInitialSearch() {
+//this returns the default values for the search
+function getSearchDefaults() {
 	return {
 		searchTerm: '',
 		yearStart: '',
@@ -34,6 +32,25 @@ export function getInitialSearch() {
 	};
 }
 
+//this returns the initial search values based on either the url parameters or the default values
+export function getInitialSearch() {
+	const defaultValues = getSearchDefaults();
+
+	const url = new URL(window.location.href);
+
+	//get url param values, but check if the parameters exist in defaults object
+	const searchValues = Object.fromEntries(
+		Array.from(url.searchParams.entries()).filter(
+			([key]) => key in defaultValues
+		)
+	);
+
+	//we assign the search values to the default values object
+	Object.assign(defaultValues, searchValues);
+
+	return defaultValues;
+}
+
 export function useSearchHook({ search, setSearchResults, setLoading }) {
 	const { searchTerm, yearStart, yearEnd, currentPage, pageSize } = search;
 
@@ -41,6 +58,19 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 	useEffect(() => {
 		setLoading(true);
 		let ignore = false; // setup variable to ignore api calls if there is a newer search request
+
+		//saving url in parameters
+		const url = new URL(window.location.href);
+
+		//go through all params and if they are not the default value, set them
+		Object.entries(search).forEach(([param, value]) => {
+			url.searchParams.delete(param);
+			if (value !== getSearchDefaults()[param]) {
+				url.searchParams.set(param, value);
+			}
+		});
+
+		window.history.replaceState({}, '', url.href);
 
 		const fetchData = async () => {
 			try {

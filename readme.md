@@ -6,16 +6,18 @@
 
 Jazz Finder (working title) is an app that lets you search through several databases and find relevant information about Jazz music and culture. This project is just a start. It utilized a huge dataset (+40.000 entries) of old jazz recordings, including all kinds of relevant information an links to media. The dataset consists if a dump from a former website (jazz-on-line.com, offline!). This project (https://saleach.neocities.org/jazzset/) consists not only of the dataset itelf, but also uploads of all the recordings on archive.org. The goal is to access the data through a search form and also provide access to the mp3 / other media, either through the Archive.org API or direct links. The dataset itself is available as a YAML-file and a python database. Since I have no experience with Python yet, I will access the YAML-File directly and parse it into a JSON file to use a mock API. But in future, hosting the dataset externally and accessing it via an API would be a better solution.
 
-## Main Milestones
+## TODOs / Main Milestones
 
-- Create a pinboard where you can move songs from the search to save them
-- make it possible to play all songs in the pinboard via a playlist (see MAYBE1)
+- Create a playlist function for the music player
+- Create a pinboard where you can move songs from the search to save them (connect it to the playlist)
 - basic CSS layout with mobile responsiveness
 - RecordingItem: Make use of the mapping of Artists, dates etc for a nicer view...
+
+Nice to have:
+
 - extend search functionality to more parameters: eg. Label, comma separated artists...
-- MAYBE1: Access the Archive.org API to display mp3 media data directly in the app
-- MAYBE2: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
-- MAYBE3: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries
+- MAYBE: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
+- MAYBE: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries
 
 ## Longer Story and Further Ideas
 

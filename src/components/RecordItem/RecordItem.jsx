@@ -4,18 +4,12 @@ import { useMediaContext } from '../../reducer/media';
 import axios from 'redaxios';
 import { useEffect, useState } from 'react';
 
-export default function RecordItem({
-	Artist,
-	Title,
-	Performers,
-	Date,
-	Label_Record,
-	url,
-	rawData,
-}) {
+export default function RecordItem(recordItem) {
 	const [, mediaDispatch] = useMediaContext();
 	const [mp3Url, setMp3Url] = useState(null);
 
+	const { Artist, Title, Performers, Date, Label_Record, url, rawData } =
+		recordItem;
 	useSetMp3Url(url, setMp3Url);
 
 	return (
@@ -27,7 +21,7 @@ export default function RecordItem({
 							onClick={() =>
 								mediaDispatch({
 									action: 'play',
-									payload: mp3Url,
+									payload: { ...recordItem, src: mp3Url },
 								})
 							}
 						>

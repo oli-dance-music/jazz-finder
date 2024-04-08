@@ -34,14 +34,26 @@ export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
 		>
 			<div className={classes.formElement}>
 				<label htmlFor="searchTerm">Artist, Song, Performers</label>
-				<input id="searchTerm" ref={searchTermRef} />
+				<input id="searchTerm" ref={searchTermRef} defaultValue={searchTerm} />
 			</div>
 			{
 				<div className={classes.formElement}>
 					<label htmlFor="yearStart">Year</label>
-					<input id="yearStart" ref={yearStartRef} type="number" size={4} />
+					<input
+						id="yearStart"
+						ref={yearStartRef}
+						defaultValue={yearStart}
+						type="number"
+						size={4}
+					/>
 					<label htmlFor="yearEnd">to</label>
-					<input id="yearEnd" ref={yearEndRef} type="number" size={4} />
+					<input
+						id="yearEnd"
+						ref={yearEndRef}
+						defaultValue={yearEnd}
+						type="number"
+						size={4}
+					/>
 				</div>
 			}
 			<div className={classes.formElement}>
