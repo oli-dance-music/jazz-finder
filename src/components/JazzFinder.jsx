@@ -9,7 +9,9 @@ export default function JazzFinder() {
 	return (
 		<MediaContext.Provider value={[media, mediaDispatch]}>
 			<h1 style={{ textAlign: 'center' }}>Jazz Finder</h1>
+			<h2 style={{ textAlign: 'center' }}>Player</h2>
 			<MediaPlayer />
+			<h2 style={{ textAlign: 'center' }}>Search</h2>
 			<SearchPage />
 			<div
 				style={{ textAlign: 'center', fontSize: '2rem', fontWeight: 'bold' }}

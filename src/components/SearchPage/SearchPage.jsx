@@ -41,16 +41,15 @@ export default function SearchPage() {
 							<>
 								<Pagination totalResults={totalResults} pageSize={pageSize} />
 								<List>
-									<List>
-										{searchResults.map((item) => (
-											<RecordItem
-												key={item.IDX}
-												url={item.URL}
-												rawData={item}
-												{...item.SRC}
-											/>
-										))}
-									</List>
+									{searchResults.map((item) => (
+										<RecordItem
+											key={item.IDX}
+											id={item.IDX}
+											url={item.URL}
+											rawData={item}
+											{...item.SRC}
+										/>
+									))}
 								</List>
 							</>
 						) : (
