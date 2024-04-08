@@ -58,26 +58,27 @@ export default function MediaPlayer() {
 
 	return (
 		<div className={classes.mediaPlayeWrapper}>
-			<div>
-				{playing ? (
-					<>
-						Playing: {artist} - {title}
-					</>
-				) : (
-					<> No song is playing </>
-				)}
-			</div>
-			<AudioPlayer
-				customAdditionalControls={[]}
-				src={src}
-				showSkipControls
-				onPlayError={(e) => handle('startPlaylist')}
-				onClickNext={() => handle('next')}
-				onClickPrevious={() => handle('previous')}
-				onEnded={() => handle('next')}
-				/* ref={player} */
-			/>
 			<List>
+				<div>
+					{playing ? (
+						<>
+							Playing: {artist} - {title}
+						</>
+					) : (
+						<> No song is playing </>
+					)}
+				</div>
+				<AudioPlayer
+					customAdditionalControls={[]}
+					src={src}
+					showSkipControls
+					onPlayError={(e) => handle('startPlaylist')}
+					onClickNext={() => handle('next')}
+					onClickPrevious={() => handle('previous')}
+					onEnded={() => handle('next')}
+					/* ref={player} */
+				/>
+
 				{playlist.map((item) => (
 					<RecordItem key={item.id} {...item} />
 				))}

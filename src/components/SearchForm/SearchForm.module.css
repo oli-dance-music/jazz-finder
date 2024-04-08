@@ -1,11 +1,17 @@
 .searchForm {
-	display: grid;
-	grid-template-columns: 0.5fr 0.3fr 0.2fr;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	gap: 1rem;
+	border: 1px solid lightgray;
 	padding: 1rem;
 }
 .formElement {
 	label {
 		padding: 1rem;
+	}
+	input[type='number'] {
+		width: 4.5rem;
 	}
 }
 .resetButton {

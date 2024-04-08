@@ -13,6 +13,7 @@ export default function RecordItem(recordItem) {
 		Artist: artist,
 		Title: title,
 		Performers,
+		Year: year,
 		Date: date,
 		Label_Record,
 		url,
@@ -55,7 +56,7 @@ export default function RecordItem(recordItem) {
 						Remove
 					</button>{' '}
 					<Card.Toggle>
-						{artist} - {title}
+						{artist} - {title} ({year})
 					</Card.Toggle>
 				</Card.Header>
 				<Card.Body>
