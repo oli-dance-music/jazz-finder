@@ -13,6 +13,8 @@ const Card = ({ children }) => {
 		);
 	});
 
+	console.log(subComponents);
+
 	return (
 		<CardContext.Provider value={[toggle, setToggle]}>
 			<div className="card">{subComponents.map((component) => component)}</div>
