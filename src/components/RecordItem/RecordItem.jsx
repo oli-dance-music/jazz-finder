@@ -4,11 +4,11 @@ import { useMediaContext } from '../../reducer/media';
 import axios from 'redaxios';
 import { useEffect, useState } from 'react';
 import Card from '../primitives/Card/Card';
-import { useSearchContext } from '../../reducer/search';
+//import { useSearchContext } from '../../reducer/search';
 
 export default function RecordItem(recordItem) {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
-	const [, searchDispatch] = useSearchContext();
+	//const [, searchDispatch] = useSearchContext(); //TODO this is throwing an error in the playlist
 	const [mp3Url, setMp3Url] = useState(null);
 
 	const {
@@ -28,10 +28,9 @@ export default function RecordItem(recordItem) {
 
 	useSetMp3Url(url, setMp3Url);
 
-	//console.log(recordItem);
-	//const name = 'count basie';
-	//console.log(performers[name].join(', '));
-	const performersMapped = Object.keys(performers).map((name) => {
+	/* TODO this is not always getting all performers, because not all of them are 
+	mapped properly.maybe use the raw data and map them manually? for now deactivated */
+	/* 	const performersMapped = Object.keys(performers).map((name) => {
 		const upperCaseName = name.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
 			letter.toUpperCase()
 		);
@@ -54,7 +53,7 @@ export default function RecordItem(recordItem) {
 				{upperCaseName} ({instruments.join(', ')})
 			</a>
 		);
-	});
+	}); */
 
 	const isInPlaylist = playlist.some(({ id }) => id === recordItem.id);
 	const isPlaying = playing !== null && playlist[playing].id === recordItem.id;
@@ -104,7 +103,11 @@ export default function RecordItem(recordItem) {
 				<Card.Body>
 					<dl className={classes.recordItemDetails}>
 						<dt>Performers</dt>
-						<dd>{performersMapped ? performersMapped : performersRaw}</dd>
+						<dd>
+							{performersRaw}
+							<br />
+							{/* {performersMapped ?? performersMapped} */}
+						</dd>
 						<dt>Record Date</dt>
 						<dd>
 							{dateRaw} (Label: {record})

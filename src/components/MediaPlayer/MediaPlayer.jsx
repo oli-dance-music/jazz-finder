@@ -57,6 +57,9 @@ export default function MediaPlayer() {
 		}
 	};
 
+	console.log('playlist');
+	playlist.map((item) => console.log(item));
+
 	return (
 		<div className={classes.mediaPlayer}>
 			<div className={classes.playerStatus}>
