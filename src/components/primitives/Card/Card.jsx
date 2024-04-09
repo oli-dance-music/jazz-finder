@@ -21,7 +21,11 @@ Card.Header = Header;
 const Toggle = (props) => {
 	const [toggle, setToggle] = useContext(CardContext);
 	return (
-		<button className={classes.toggleButton} onClick={() => setToggle(!toggle)}>
+		<button
+			className={classes.toggleButton}
+			onClick={() => setToggle(!toggle)}
+			disabled={props.disabled}
+		>
 			{toggle ? '[-]' : '[+]'}
 			{props.children}
 		</button>

@@ -83,11 +83,19 @@ export default function MediaPlayer() {
 			/>
 			<Card>
 				<Card.Header>
-					<Card.Toggle>Show Playlist ({playlist.length} songs)</Card.Toggle>
-					<button onClick={() => handle('startPlaylist')}>
+					<Card.Toggle disabled={playlist.length === 0}>
+						Show Playlist ({playlist.length} songs)
+					</Card.Toggle>
+					<button
+						onClick={() => handle('startPlaylist')}
+						disabled={playlist.length === 0}
+					>
 						Start Playlist
 					</button>
-					<button onClick={() => handle('emptyPlaylist')}>
+					<button
+						onClick={() => handle('emptyPlaylist')}
+						disabled={playlist.length === 0}
+					>
 						Empty Playlist
 					</button>
 				</Card.Header>
