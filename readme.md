@@ -13,6 +13,7 @@ Jazz Finder (working title) is an app that lets you search through several datab
 
 Nice to have:
 
+- Implement Icon Library (maybe from https://react-icons.github.io/react-icons/icons/fa6/)
 - Implement a proper Header functionality with helmet, for easy adjustment of the title and header data
 - extend search functionality to more parameters: eg. Label, comma separated artists...
 - MAYBE: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
