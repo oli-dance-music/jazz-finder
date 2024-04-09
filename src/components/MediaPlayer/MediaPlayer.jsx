@@ -27,12 +27,12 @@ export default function MediaPlayer() {
 	);
 
 	const handle = (action) => {
+		//if there is no playlist, we dont need to do anything
+		if (!playlist.length) return;
+
 		switch (action) {
 			case 'startPlaylist':
 				if (playlist.length && playlist[0].src) {
-					console.log('why not?');
-					console.log(playlist[0].src);
-
 					mediaDispatch({
 						action: 'play',
 						payload: playlist[0],
@@ -59,7 +59,7 @@ export default function MediaPlayer() {
 
 	return (
 		<div className={classes.mediaPlayer}>
-			<div>
+			<div className={classes.playerStatus}>
 				{playing !== null ? (
 					<>
 						<Helmet>
@@ -113,8 +113,6 @@ export default function MediaPlayer() {
 
 function useLocalStorage(playlist) {
 	useEffect(() => {
-		console.log('playlist changed');
-		console.log(playlist);
 		localStorage.setItem('playlist', JSON.stringify(playlist));
 	}, [playlist]);
 }

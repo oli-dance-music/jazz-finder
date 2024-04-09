@@ -32,7 +32,7 @@ export default function handler(request, response) {
 
 		let filteredRecordings = allRecordings;
 
-		console.log(searchTerm);
+		//console.log(searchTerm);
 
 		if (searchTerm.length) {
 			filteredRecordings = filteredRecordings.filter(

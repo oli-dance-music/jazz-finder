@@ -47,7 +47,7 @@ export default function SearchPage() {
 											id={item.IDX}
 											url={item.URL}
 											rawData={item}
-											{...item.SRC}
+											{...item}
 										/>
 									))}
 								</List>

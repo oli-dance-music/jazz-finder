@@ -2,7 +2,7 @@ import { MediaContext, useMediaReducer } from '../reducer/media';
 import Header from './Header'; /*, { HeaderContext, useHeaderTitle } */
 import MediaPlayer from './MediaPlayer/MediaPlayer';
 import SearchPage from './SearchPage/SearchPage';
-import Grid from './primitives/Grid/Grid';
+//import Grid from './primitives/Grid/Grid';
 
 export default function JazzFinder() {
 	const [media, mediaDispatch] = useMediaReducer();

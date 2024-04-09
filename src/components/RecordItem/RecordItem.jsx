@@ -4,22 +4,57 @@ import { useMediaContext } from '../../reducer/media';
 import axios from 'redaxios';
 import { useEffect, useState } from 'react';
 import Card from '../primitives/Card/Card';
+import { useSearchContext } from '../../reducer/search';
 
 export default function RecordItem(recordItem) {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
+	const [, searchDispatch] = useSearchContext();
 	const [mp3Url, setMp3Url] = useState(null);
 
 	const {
 		Artist: artist,
 		Title: title,
-		Performers,
+		PEOPLE: performers,
 		Year: year,
-		Date: date,
-		Label_Record,
+		//Month: month,
+		//Day: day,
+		Record: record,
 		url,
+		SRC,
 		rawData,
 	} = recordItem;
+
+	const { Date: dateRaw, Performers: performersRaw } = SRC;
+
 	useSetMp3Url(url, setMp3Url);
+
+	//console.log(recordItem);
+	//const name = 'count basie';
+	//console.log(performers[name].join(', '));
+	const performersMapped = Object.keys(performers).map((name) => {
+		const upperCaseName = name.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+			letter.toUpperCase()
+		);
+		const instruments = performers[name];
+
+		return (
+			<a
+				key={name}
+				className={classes.artistLink}
+				href={encodeURIComponent(upperCaseName)}
+				onClick={(e) => {
+					searchDispatch({
+						action: 'set',
+						parameter: 'searchTerm',
+						payload: upperCaseName,
+					});
+					e.preventDefault();
+				}}
+			>
+				{upperCaseName} ({instruments.join(', ')})
+			</a>
+		);
+	});
 
 	const isInPlaylist = playlist.some(({ id }) => id === recordItem.id);
 	const isPlaying = playing !== null && playlist[playing].id === recordItem.id;
@@ -67,14 +102,19 @@ export default function RecordItem(recordItem) {
 					</Card.Toggle>
 				</Card.Header>
 				<Card.Body>
+					<dl className={classes.recordItemDetails}>
+						<dt>Performers</dt>
+						<dd>{performersMapped ? performersMapped : performersRaw}</dd>
+						<dt>Record Date</dt>
+						<dd>
+							{dateRaw} (Label: {record})
+						</dd>
+					</dl>
 					<p>
 						<a href={url} target="_blank" rel="noreferrer">
 							Open on Archive.org
 						</a>
 					</p>
-					<p>{Performers}</p>
-					<p>{Label_Record}</p>
-
 					<Toggle title="Show JSON">{JSON.stringify(rawData)}</Toggle>
 				</Card.Body>
 			</Card>
@@ -82,6 +122,10 @@ export default function RecordItem(recordItem) {
 	);
 }
 
+/* we call the Archive.org 
+API to get the correct mp3 url for the recording and save it in a state 
+(TODO check if state is the best solution here) 
+*/
 function useSetMp3Url(url, setMp3Url) {
 	useEffect(() => {
 		//prepare url for playing
@@ -102,5 +146,5 @@ function useSetMp3Url(url, setMp3Url) {
 			}
 		};
 		fetchData();
-	}, [url]);
+	}, [url]); //eslint-disable-line
 }

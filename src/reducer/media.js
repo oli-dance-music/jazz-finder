@@ -27,7 +27,6 @@ export function mediaReducer(media, message) {
 				playlistIndex = media.playlist.length;
 			}
 			return {
-				...media,
 				playing: playlistIndex,
 				playlist: AddToPlaylist
 					? [...media.playlist, message.payload]
@@ -42,7 +41,10 @@ export function mediaReducer(media, message) {
 			};
 		case 'removeFromPlaylist':
 			return {
-				...media,
+				playing:
+					media.playlist[media.playing].id === message.payload.id
+						? null
+						: media.playing,
 				playlist: media.playlist.filter(({ id }) => id !== message.payload.id),
 			};
 	}

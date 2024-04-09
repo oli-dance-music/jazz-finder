@@ -2,12 +2,11 @@
 	padding: 5px;
 }
 
-.header {
-	background: darkblue;
-	color: white;
-}
-
-.body {
-	background-color: bisque;
-	padding: 1rem;
+.artistLink {
+	text-decoration: none;
+	display: inline-block;
+	background: lightgray;
+	padding: 0 0.5rem;
+	margin: 3px;
+	border-radius: 2px;
 }

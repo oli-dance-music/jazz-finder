@@ -5,7 +5,13 @@ import classes from './SearchForm.module.css';
 export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
 	const [, searchDispatch] = useSearchContext();
 
-	//we need to use uncontrolled inputs because we only want to change the state once the form is submitted
+	/* 
+		TODO: I thought we need to use uncontrolled inputs because 
+		we only want to change the state once the form is submitted
+		This becomes a problem when I update searchTerm state through 
+		another component (eg. recordItem), then the input doesnt update
+		maybe find a way to use controlled inputs or to update it via an effect
+	*/
 	const searchTermRef = useRef(searchTerm);
 	const yearStartRef = useRef(yearStart);
 	const yearEndRef = useRef(yearEnd);
