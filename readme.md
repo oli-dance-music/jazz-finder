@@ -4,20 +4,22 @@
 
 ## Short Description
 
-Jazz Finder (working title) is an app that lets you search through several databases and find relevant information about Jazz music and culture. This project is just a start. It utilized a huge dataset (+40.000 entries) of old jazz recordings, including all kinds of relevant information an links to media. The dataset consists if a dump from a former website (jazz-on-line.com, offline!). This project (https://saleach.neocities.org/jazzset/) consists not only of the dataset itelf, but also uploads of all the recordings on archive.org. The goal is to access the data through a search form and also provide access to the mp3 / other media, either through the Archive.org API or direct links. The dataset itself is available as a YAML-file and a python database. Since I have no experience with Python yet, I will access the YAML-File directly and parse it into a JSON file to use a mock API. But in future, hosting the dataset externally and accessing it via an API would be a better solution.
+Jazz Finder (working title) is an app that lets you search the internet and find relevant information about Jazz music and culture. This project is just a start. It utilizes a huge dataset (+40.000 entries) of old jazz recordings, including all kinds of relevant information an links to media. The dataset consists if a dump from a former website (jazz-on-line.com, offline!). This project (https://saleach.neocities.org/jazzset/) consists not only of the dataset itelf, but also uploads of all the recordings on archive.org. The goal is to access the data through a search form and also provide access to the mp3 / other media, either through the Archive.org API or direct links. The dataset itself is available as a YAML-file and a python database. Since I have no experience with Python yet, I will access the YAML-File directly and parse it into a JSON file to use a mock API. But in future, hosting the dataset externally and accessing it via an API would be a better solution.
 
-## TODOs / Milestones
+## Sprint TODOs
 
 - RecordingItem: Make use of the mapping of Artists, dates etc for a nicer view...
 - basic CSS layout with mobile responsiveness
+- code clean up and documentation
 
-Nice to have:
+## Milestones / Ideas for future releases
 
 - Implement Icon Library (maybe from https://react-icons.github.io/react-icons/icons/fa6/)
 - Implement a proper Header functionality with helmet, for easy adjustment of the title and header data
 - extend search functionality to more parameters: eg. Label, comma separated artists...
-- MAYBE: Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used)
-- MAYBE: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries
+- Access the Discogs API to map the recordings/artists to discogs entries (many entries contain discog-ids for individual artists, else also a search function in discogs can be used), eg. to get images of artists
+- MAYBE: Access the Musicbrainz API to map the recordings/artists to Musicbrainz entries, as a complement to discogs
+- Further APIs (spotify, yt...) might be possible too
 
 ## Longer Story and Further Ideas
 

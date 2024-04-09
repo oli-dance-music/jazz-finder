@@ -29,23 +29,26 @@ export default function MediaPlayer() {
 	const handle = (action) => {
 		switch (action) {
 			case 'startPlaylist':
-				if (playlist.length) {
+				if (playlist.length && playlist[0].src) {
+					console.log('why not?');
+					console.log(playlist[0].src);
+
 					mediaDispatch({
-						action: 'playing',
-						payload: 0,
+						action: 'play',
+						payload: playlist[0],
 					});
 				}
 				break;
 			case 'next':
 				mediaDispatch({
-					action: 'playing',
-					payload: playing < playlist.length - 1 ? playing + 1 : 0,
+					action: 'play',
+					payload: playlist[playing < playlist.length - 1 ? playing + 1 : 0],
 				});
 				break;
 			case 'previous':
 				mediaDispatch({
-					action: 'playing',
-					payload: playing > 0 ? playing - 1 : playlist.length - 1,
+					action: 'play',
+					payload: playlist[playing > 0 ? playing - 1 : playlist.length - 1],
 				});
 				break;
 			case 'emptyPlaylist':
@@ -81,6 +84,9 @@ export default function MediaPlayer() {
 			<Card>
 				<Card.Header>
 					<Card.Toggle>Show Playlist ({playlist.length} songs)</Card.Toggle>
+					<button onClick={() => handle('startPlaylist')}>
+						Start Playlist
+					</button>
 					<button onClick={() => handle('emptyPlaylist')}>
 						Empty Playlist
 					</button>

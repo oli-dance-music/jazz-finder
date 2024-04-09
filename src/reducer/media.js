@@ -14,7 +14,6 @@ export function mediaReducer(media, message) {
 			playlist: [],
 		};
 	}
-
 	//check if song is already in playlist
 	let playlistIndex = media.playlist.findIndex(
 		({ id }) => id === message.payload.id
