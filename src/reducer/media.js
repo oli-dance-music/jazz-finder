@@ -7,16 +7,29 @@ export function useMediaContext() {
 }
 
 export function mediaReducer(media, message) {
+	// fir emptying playlist we dont need the logic afterwards
+	if (message.action === 'emptyPlaylist') {
+		return {
+			playing: null,
+			playlist: [],
+		};
+	}
+
 	//check if song is already in playlist
-	console.log(message);
-	const AddToPlaylist = !media.playlist.some(
+	let playlistIndex = media.playlist.findIndex(
 		({ id }) => id === message.payload.id
 	);
+	const AddToPlaylist = playlistIndex < 0;
+
 	switch (message.action) {
 		case 'play':
+			//if song is not in playlist, we add it and set the index to playlist.length
+			if (AddToPlaylist) {
+				playlistIndex = media.playlist.length;
+			}
 			return {
 				...media,
-				playing: message.payload,
+				playing: playlistIndex,
 				playlist: AddToPlaylist
 					? [...media.playlist, message.payload]
 					: media.playlist,

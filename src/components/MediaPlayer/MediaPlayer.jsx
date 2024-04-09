@@ -4,87 +4,95 @@ import 'react-h5-audio-player/lib/styles.css';
 import { useMediaContext } from '../../reducer/media';
 import List from '../primitives/List/List';
 import RecordItem from '../RecordItem/RecordItem';
-import { /* createRef, */ useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import Card from '../primitives/Card/Card';
+import useConfirm from '../../hooks/useConfirm';
+//import { useHeaderContext } from '../Header';
+import { Helmet } from 'react-helmet-async';
 
 export default function MediaPlayer() {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
-	const [currentTrack, setTrackIndex] = useState(null);
-	//const [player, setPlayer] = useState(null);
-	const { Artist: artist = '', Title: title = '', src = '' } = playing || {};
+
+	/* const [title, setTitle] = useHeaderContext(); */
 
 	useLocalStorage(playlist);
 
-	//const [loop, setLoop] = useState(false);
-	//console.log(playlist);
-	//console.log(currentTrack);
-	//console.log(src);
+	const confirmEmptyBasket = useConfirm(
+		'Are you sure you want to empty the playlist?',
+		() => {
+			mediaDispatch({
+				action: 'emptyPlaylist',
+			});
+		}
+	);
 
 	const handle = (action) => {
 		switch (action) {
 			case 'startPlaylist':
 				if (playlist.length) {
-					setTrackIndex(0);
+					mediaDispatch({
+						action: 'playing',
+						payload: 0,
+					});
 				}
 				break;
 			case 'next':
-				setTrackIndex((currentTrack) =>
-					currentTrack < playlist.length - 1 ? currentTrack + 1 : 0
-				);
+				mediaDispatch({
+					action: 'playing',
+					payload: playing < playlist.length - 1 ? playing + 1 : 0,
+				});
 				break;
 			case 'previous':
-				setTrackIndex((currentTrack) =>
-					currentTrack > 0 ? currentTrack - 1 : playlist.length - 1
-				);
+				mediaDispatch({
+					action: 'playing',
+					payload: playing > 0 ? playing - 1 : playlist.length - 1,
+				});
+				break;
+			case 'emptyPlaylist':
+				confirmEmptyBasket();
 				break;
 		}
 	};
 
-	//const player = createRef();
-	//console.log(player);
-	//if (player) player.togglePlay();
-
-	useEffect(() => {
-		console.log('current track changed');
-
-		//skip the effect if no song is loaded
-		if (!playlist.length || currentTrack === null) return;
-
-		//console.log(player);
-		//player.togglePlay();
-
-		mediaDispatch({
-			action: 'play',
-			payload: playlist[currentTrack],
-		});
-	}, [currentTrack]);
-
 	return (
-		<div className={classes.mediaPlayeWrapper}>
-			<List>
-				<div>
-					{playing ? (
-						<>
-							Playing: {artist} - {title}
-						</>
-					) : (
-						<> No song is playing </>
-					)}
-				</div>
-				<AudioPlayer
-					customAdditionalControls={[]}
-					src={src}
-					showSkipControls
-					onPlayError={(e) => handle('startPlaylist')}
-					onClickNext={() => handle('next')}
-					onClickPrevious={() => handle('previous')}
-					onEnded={() => handle('next')}
-					/* ref={player} */
-				/>
+		<div className={classes.mediaPlayer}>
+			<div>
+				{playing !== null ? (
+					<>
+						<Helmet>
+							<title>🎵 {playlist[playing].Title} - Jazz Finder</title>
+						</Helmet>
+						Playing: {playlist[playing].Artist} - {playlist[playing].Title}
+					</>
+				) : (
+					<> No song is playing </>
+				)}
+			</div>
 
-				{playlist.map((item) => (
-					<RecordItem key={item.id} {...item} />
-				))}
-			</List>
+			<AudioPlayer
+				customAdditionalControls={[]}
+				src={playing !== null ? playlist[playing].src : ''}
+				showSkipControls
+				onPlayError={() => handle('startPlaylist')}
+				onClickNext={() => handle('next')}
+				onClickPrevious={() => handle('previous')}
+				onEnded={() => handle('next')}
+			/>
+			<Card>
+				<Card.Header>
+					<Card.Toggle>Show Playlist ({playlist.length} songs)</Card.Toggle>
+					<button onClick={() => handle('emptyPlaylist')}>
+						Empty Playlist
+					</button>
+				</Card.Header>
+				<Card.Body>
+					<List>
+						{playlist.map((item) => (
+							<RecordItem key={item.id} {...item} />
+						))}
+					</List>
+				</Card.Body>
+			</Card>
 		</div>
 	);
 }

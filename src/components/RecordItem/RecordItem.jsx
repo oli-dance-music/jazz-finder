@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Card from '../primitives/Card/Card';
 
 export default function RecordItem(recordItem) {
-	const [, mediaDispatch] = useMediaContext();
+	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
 	const [mp3Url, setMp3Url] = useState(null);
 
 	const {
@@ -21,11 +21,15 @@ export default function RecordItem(recordItem) {
 	} = recordItem;
 	useSetMp3Url(url, setMp3Url);
 
+	const isInPlaylist = playlist.some(({ id }) => id === recordItem.id);
+	const isPlaying = playing !== null && playlist[playing].id === recordItem.id;
+
 	return (
 		<div className={classes.recordItem}>
 			<Card>
 				<Card.Header>
 					<button
+						disabled={isPlaying || mp3Url === null ? true : false}
 						onClick={() =>
 							mediaDispatch({
 								action: 'play',
@@ -35,26 +39,29 @@ export default function RecordItem(recordItem) {
 					>
 						Play
 					</button>
-					<button
-						onClick={() =>
-							mediaDispatch({
-								action: 'addToPlaylist',
-								payload: { ...recordItem, src: mp3Url },
-							})
-						}
-					>
-						Add
-					</button>
-					<button
-						onClick={() =>
-							mediaDispatch({
-								action: 'removeFromPlaylist',
-								payload: { ...recordItem, src: mp3Url },
-							})
-						}
-					>
-						Remove
-					</button>{' '}
+					{!isInPlaylist ? (
+						<button
+							onClick={() =>
+								mediaDispatch({
+									action: 'addToPlaylist',
+									payload: { ...recordItem, src: mp3Url },
+								})
+							}
+						>
+							Add
+						</button>
+					) : (
+						<button
+							onClick={() =>
+								mediaDispatch({
+									action: 'removeFromPlaylist',
+									payload: { ...recordItem, src: mp3Url },
+								})
+							}
+						>
+							Remove
+						</button>
+					)}
 					<Card.Toggle>
 						{artist} - {title} ({year})
 					</Card.Toggle>
@@ -71,30 +78,6 @@ export default function RecordItem(recordItem) {
 					<Toggle title="Show JSON">{JSON.stringify(rawData)}</Toggle>
 				</Card.Body>
 			</Card>
-			{/* 
-			<Toggle title={`${artist} - ${title} (${date})`}>
-				<div className={classes.body}>
-					<p>
-						<a href={url} target="_blank" rel="noreferrer">
-							Open on Archive.org
-						</a>
-					</p>
-					<p>{Performers}</p>
-					<p>{Label_Record}</p>
-					 <div>
-						<iframe
-							title={`${Artist} - ${Title}`}
-							src={url.replace('details', 'embed')}
-							width={500}
-							height={35}
-							webkitallowfullscreen="true"
-							mozallowfullscreen="true"
-							allowFullScreen
-						></iframe>
-					</div> 
-					<Toggle title="Show JSON">{JSON.stringify(rawData)}</Toggle>
-				</div>
-			</Toggle> */}
 		</div>
 	);
 }

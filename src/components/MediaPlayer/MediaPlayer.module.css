@@ -1,3 +1,7 @@
-.mediaPlayerWrapper {
+.mediaPlayer {
+	margin-bottom: 1rem;
+}
+
+:global(.rhap_container) {
 	margin-bottom: 1rem;
 }
