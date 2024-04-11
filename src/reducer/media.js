@@ -19,6 +19,7 @@ export function mediaReducer(media, message) {
 		({ id }) => id === message.payload.id
 	);
 	const AddToPlaylist = playlistIndex < 0;
+	let newPlaying;
 
 	switch (message.action) {
 		case 'play':
@@ -40,12 +41,26 @@ export function mediaReducer(media, message) {
 					: media.playlist,
 			};
 		case 'removeFromPlaylist':
+			/* check if removing the song will affect the currently playing song. 
+				- If no song is playing, we dont need to do anything
+				- the the removed song is currently playing, it will strt the next song (playing key stays the same)
+				- if the removed song is the currently playing song and the only song in the playlist, we set the playing song to null
+				- if the song being removed is above the currently playing song, we need to decrement the playing song index
+			*/
+			newPlaying = media.playing;
+			if (media.playing !== null) {
+				if (playlistIndex === media.playing) {
+					if (media.playlist.length <= 1) {
+						newPlaying = null;
+					}
+				} else {
+					if (playlistIndex < media.playing) {
+						newPlaying--;
+					}
+				}
+			}
 			return {
-				playing:
-					media.playing !== null &&
-					media.playlist[media.playing].id === message.payload.id
-						? null
-						: media.playing,
+				playing: newPlaying,
 				playlist: media.playlist.filter(({ id }) => id !== message.payload.id),
 			};
 	}
