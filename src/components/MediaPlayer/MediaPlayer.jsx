@@ -57,7 +57,9 @@ export default function MediaPlayer() {
 		}
 	};
 
-	console.log('playlist');
+	console.log('playing', playing);
+	console.log('playlist[playing]', playlist[playing]);
+
 	playlist.map((item) => console.log(item));
 
 	return (

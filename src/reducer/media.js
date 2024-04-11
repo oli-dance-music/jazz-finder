@@ -42,7 +42,7 @@ export function mediaReducer(media, message) {
 		case 'removeFromPlaylist':
 			return {
 				playing:
-					media.playing &&
+					media.playing !== null &&
 					media.playlist[media.playing].id === message.payload.id
 						? null
 						: media.playing,
