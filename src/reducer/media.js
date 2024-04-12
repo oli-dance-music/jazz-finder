@@ -53,6 +53,10 @@ export function mediaReducer(media, message) {
 					if (media.playlist.length <= 1) {
 						newPlaying = null;
 					}
+					if (media.playlist.length == media.playing + 1) {
+						// reset to first song if currently playing is the last song
+						newPlaying = 0;
+					}
 				} else {
 					if (playlistIndex < media.playing) {
 						newPlaying--;
