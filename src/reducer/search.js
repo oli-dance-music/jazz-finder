@@ -40,9 +40,9 @@ export function getInitialSearch() {
 
 	//get url param values, but check if the parameters exist in defaults object
 	const searchValues = Object.fromEntries(
-		Array.from(url.searchParams.entries()).filter(
-			([key]) => key in defaultValues
-		)
+		Array.from(url.searchParams.entries())
+			.filter(([key]) => key in defaultValues)
+			.map(([key, value]) => [key, decodeURIComponent(value)])
 	);
 
 	//we assign the search values to the default values object
@@ -66,7 +66,7 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 		Object.entries(search).forEach(([param, value]) => {
 			url.searchParams.delete(param);
 			if (value !== getSearchDefaults()[param]) {
-				url.searchParams.set(param, encodeURI(value));
+				url.searchParams.set(param, encodeURIComponent(value));
 			}
 		});
 
@@ -75,12 +75,10 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 		const fetchData = async () => {
 			try {
 				//accessing mock api that is hosted serverless on the same url
-				const apiUrl = `${
-					new URL(window.location.href).origin
-				}/api/recordings?searchTerm=${encodeURI(searchTerm)}`;
+				const apiUrl = `${new URL(window.location.href).origin}/api/recordings`;
 
 				const params = {
-					//searchTerm, disabled: if sending searchTerm as a param, it will not work, since the escaping of the space
+					searchTerm: encodeURIComponent(searchTerm),
 					yearStart,
 					yearEnd,
 					pageSize,

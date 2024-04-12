@@ -29,7 +29,7 @@ export default function handler(request, response) {
 
 	function getRecordings(searchTermRaw = '', yearStart = '', yearEnd = '') {
 		//replace , with | for regex to find any term
-		const searchTerms = searchTermRaw
+		const searchTerms = decodeURIComponent(searchTermRaw)
 			.split(',')
 			.map((term) => term.trim())
 			.join('|')
@@ -47,7 +47,7 @@ export default function handler(request, response) {
 			);
 		});
 
-		//intersection
+		//intersection of the different findings
 		let filteredRecordings = arrayOfArrays.reduce((a, b) =>
 			a.filter((c) => b.includes(c))
 		);
