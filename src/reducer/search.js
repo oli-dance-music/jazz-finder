@@ -13,7 +13,7 @@ function searchReducer(search, message) {
 		case 'set':
 			return { ...search, [message.parameter]: message.payload };
 		case 'reset':
-			return getSearchDefaults();
+			return { ...getSearchDefaults() };
 	}
 }
 
@@ -56,6 +56,7 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 
 	//do search once in the beginning without parameters to load all recordings (paginated)
 	useEffect(() => {
+		console.log(search);
 		setLoading(true);
 		let ignore = false; // setup variable to ignore api calls if there is a newer search request
 

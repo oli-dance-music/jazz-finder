@@ -4,11 +4,11 @@ import { useMediaContext } from '../../reducer/media';
 import axios from 'redaxios';
 import { useEffect, useState } from 'react';
 import Card from '../primitives/Card/Card';
-//import { useSearchContext } from '../../reducer/search';
+import { useSearchContext } from '../../reducer/search';
 
 export default function RecordItem(recordItem) {
 	const [{ playing, playlist }, mediaDispatch] = useMediaContext();
-	//const [, searchDispatch] = useSearchContext(); //TODO this is throwing an error in the playlist
+	const [, searchDispatch] = useSearchContext(); //TODO this is throwing an error in the playlist
 	const [mp3Url, setMp3Url] = useState(null);
 
 	const {
@@ -30,7 +30,7 @@ export default function RecordItem(recordItem) {
 
 	/* TODO this is not always getting all performers, because not all of them are 
 	mapped properly.maybe use the raw data and map them manually? for now deactivated */
-	/* 	const performersMapped = Object.keys(performers).map((name) => {
+	const performersMapped = Object.keys(performers).map((name) => {
 		const upperCaseName = name.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
 			letter.toUpperCase()
 		);
@@ -42,6 +42,7 @@ export default function RecordItem(recordItem) {
 				className={classes.artistLink}
 				href={encodeURIComponent(upperCaseName)}
 				onClick={(e) => {
+					console.log('seearch for ' + upperCaseName);
 					searchDispatch({
 						action: 'set',
 						parameter: 'searchTerm',
@@ -53,7 +54,7 @@ export default function RecordItem(recordItem) {
 				{upperCaseName} ({instruments.join(', ')})
 			</a>
 		);
-	}); */
+	});
 
 	const isInPlaylist = playlist.some(({ id }) => id === recordItem.id);
 	const isPlaying = playing !== null && playlist[playing].id === recordItem.id;
@@ -106,7 +107,7 @@ export default function RecordItem(recordItem) {
 						<dd>
 							{performersRaw}
 							<br />
-							{/* {performersMapped ?? performersMapped} */}
+							{performersMapped ?? performersMapped}
 						</dd>
 						<dt>Record Date</dt>
 						<dd>

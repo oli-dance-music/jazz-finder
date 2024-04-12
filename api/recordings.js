@@ -51,17 +51,6 @@ export default function handler(request, response) {
 		let filteredRecordings = arrayOfArrays.reduce((a, b) =>
 			a.filter((c) => b.includes(c))
 		);
-		/* 
-		const regExp = new RegExp(searchTermRaw, 'i');
-
-		if (searchTermRaw.length) {
-			filteredRecordings = filteredRecordings.filter(
-				({ Title, Artist, SRC }) =>
-					regExp.test(Title) ||
-					regExp.test(Artist) ||
-					regExp.test(SRC.Performers)
-			);
-		} */
 
 		if (yearStart.length || yearEnd.length) {
 			filteredRecordings = filteredRecordings.filter(({ Year }) => {

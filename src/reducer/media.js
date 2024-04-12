@@ -81,7 +81,7 @@ src: string,
 export function getInitialMedia() {
 	let playlist = null;
 
-	console.log('initial playlist');
+	//console.log('initial playlist');
 
 	try {
 		playlist = JSON.parse(localStorage.getItem('playlist'));
@@ -91,7 +91,7 @@ export function getInitialMedia() {
 		playlist = [];
 	}
 
-	console.log(playlist);
+	//console.log(playlist);
 
 	return {
 		playing: null,

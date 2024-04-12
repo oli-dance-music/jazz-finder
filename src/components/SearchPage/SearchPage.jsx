@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-	SearchContext,
-	useSearchReducer,
-	useSearchHook,
-} from '../../reducer/search';
+import { useSearchContext, useSearchHook } from '../../reducer/search';
 import Loader from '../primitives/Loader/Loader';
 import Pagination from '../Pagination/Pagination';
 import RecordItem from '../RecordItem/RecordItem';
@@ -14,7 +10,7 @@ import classes from './SearchPage.module.css';
 
 export default function SearchPage() {
 	//we init the searchReducer and spread the search object into variables
-	const [search, searchDispatch] = useSearchReducer();
+	const [search] = useSearchContext();
 	const { pageSize } = search;
 
 	//we use a state that mirrors the response object from the API
@@ -30,42 +26,40 @@ export default function SearchPage() {
 	useSearchHook({ search, setSearchResults, setLoading });
 
 	return (
-		<SearchContext.Provider value={[search, searchDispatch]}>
-			<div className={classes.searchPage}>
-				<SearchForm {...search} />
-				{loading ? (
-					<Loader />
-				) : (
-					<>
-						{searchResults.length ? (
-							<>
-								<Pagination totalResults={totalResults} pageSize={pageSize} />
-								<List>
-									{searchResults.map((item) => (
-										<RecordItem
-											key={item.IDX}
-											id={item.IDX}
-											url={item.URL}
-											rawData={item}
-											{...item}
-										/>
-									))}
-								</List>
-							</>
-						) : (
-							<div
-								style={{
-									textAlign: 'center',
-									fontSize: '2rem',
-									fontWeight: 'bold',
-								}}
-							>
-								No Results found, please check your search
-							</div>
-						)}
-					</>
-				)}
-			</div>
-		</SearchContext.Provider>
+		<div className={classes.searchPage}>
+			<SearchForm {...search} />
+			{loading ? (
+				<Loader />
+			) : (
+				<>
+					{searchResults.length ? (
+						<>
+							<Pagination totalResults={totalResults} pageSize={pageSize} />
+							<List>
+								{searchResults.map((item) => (
+									<RecordItem
+										key={item.IDX}
+										id={item.IDX}
+										url={item.URL}
+										rawData={item}
+										{...item}
+									/>
+								))}
+							</List>
+						</>
+					) : (
+						<div
+							style={{
+								textAlign: 'center',
+								fontSize: '2rem',
+								fontWeight: 'bold',
+							}}
+						>
+							No Results found, please check your search
+						</div>
+					)}
+				</>
+			)}
+		</div>
 	);
 }

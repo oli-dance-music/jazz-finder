@@ -57,10 +57,10 @@ export default function MediaPlayer() {
 		}
 	};
 
-	console.log('playing', playing);
-	console.log('playlist[playing]', playlist[playing]);
+	//console.log('playing', playing);
+	//console.log('playlist[playing]', playlist[playing]);
 
-	playlist.map((item) => console.log(item));
+	//playlist.map((item) => console.log(item));
 
 	return (
 		<div className={classes.mediaPlayer}>

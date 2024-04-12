@@ -5,7 +5,7 @@
 .artistLink {
 	text-decoration: none;
 	display: inline-block;
-	background: lightgray;
+	background: var(--yellow-1);
 	padding: 0 0.5rem;
 	margin: 3px;
 	border-radius: 2px;
