@@ -66,7 +66,7 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 		Object.entries(search).forEach(([param, value]) => {
 			url.searchParams.delete(param);
 			if (value !== getSearchDefaults()[param]) {
-				url.searchParams.set(param, value);
+				url.searchParams.set(param, encodeURI(value));
 			}
 		});
 
@@ -77,7 +77,7 @@ export function useSearchHook({ search, setSearchResults, setLoading }) {
 				//accessing mock api that is hosted serverless on the same url
 				const apiUrl = `${
 					new URL(window.location.href).origin
-				}/api/recordings?searchTerm=${searchTerm}`;
+				}/api/recordings?searchTerm=${encodeURI(searchTerm)}`;
 
 				const params = {
 					//searchTerm, disabled: if sending searchTerm as a param, it will not work, since the escaping of the space
