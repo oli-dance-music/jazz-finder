@@ -38,6 +38,17 @@ export default function SearchForm({ searchTerm, yearStart, yearEnd }) {
 				e.preventDefault();
 			}}
 		>
+			<ul>
+				<li>
+					Use "," to search for multiple terms, eg. "Dinah,Honeysuckle Rose"
+					finds all instances of both songs{' '}
+				</li>
+				<li>
+					Use "+" to search for a combination of multiple terms, eg. "Fats
+					Waller+Honeysuckle Rose" finds all instances of HoneySuckle Rose with
+					Fats Waller
+				</li>
+			</ul>
 			<div className={classes.formElement}>
 				<label htmlFor="searchTerm">Artist, Song, Performers</label>
 				<input id="searchTerm" ref={searchTermRef} defaultValue={searchTerm} />

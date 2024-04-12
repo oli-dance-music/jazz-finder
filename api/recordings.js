@@ -27,29 +27,50 @@ export default function handler(request, response) {
 		)
 	);
 
-	function getRecordings(searchTerm = '', yearStart = '', yearEnd = '') {
-		const regExp = new RegExp(searchTerm, 'i');
+	function getRecordings(searchTermRaw = '', yearStart = '', yearEnd = '') {
+		//replace , with | for regex to find any term
+		const searchTerms = searchTermRaw
+			.split(',')
+			.map((term) => term.trim())
+			.join('|')
+			.split('+')
+			.map((term) => term.trim());
 
-		let filteredRecordings = allRecordings;
+		//find recordings for each term
+		const arrayOfArrays = searchTerms.map((term) => {
+			const regExp = new RegExp(term, 'i');
+			return allRecordings.filter(
+				({ Title, Artist, SRC }) =>
+					regExp.test(Title) ||
+					regExp.test(Artist) ||
+					regExp.test(SRC.Performers)
+			);
+		});
 
-		//console.log(searchTerm);
+		//intersection
+		let filteredRecordings = arrayOfArrays.reduce((a, b) =>
+			a.filter((c) => b.includes(c))
+		);
+		/* 
+		const regExp = new RegExp(searchTermRaw, 'i');
 
-		if (searchTerm.length) {
+		if (searchTermRaw.length) {
 			filteredRecordings = filteredRecordings.filter(
 				({ Title, Artist, SRC }) =>
 					regExp.test(Title) ||
 					regExp.test(Artist) ||
 					regExp.test(SRC.Performers)
 			);
-		}
+		} */
+
 		if (yearStart.length || yearEnd.length) {
 			filteredRecordings = filteredRecordings.filter(({ Year }) => {
 				if (yearStart.length && yearEnd.length) {
 					return Year >= yearStart && Year <= yearEnd;
 				} else if (yearStart.length) {
-					return Year == yearStart;
+					return Year >= yearStart;
 				} else if (yearEnd.length) {
-					return Year == yearEnd;
+					return Year <= yearEnd;
 				}
 			});
 		}
